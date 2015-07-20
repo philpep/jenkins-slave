@@ -22,6 +22,7 @@ RUN chmod +x /usr/local/bin/wrapdocker
 RUN useradd -m -s /bin/bash jenkins
 RUN echo jenkins:jenkins | chpasswd
 RUN adduser jenkins docker
+RUN echo "jenkins ALL=(root) NOPASSWD: ALL" > /etc/sudoers.d/jenkins
 RUN mkdir -p /var/run/sshd
 
 EXPOSE 22
