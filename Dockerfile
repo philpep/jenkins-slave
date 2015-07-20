@@ -25,6 +25,8 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" > /etc/
 RUN wget -q -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 RUN apt-get -qqy update && apt-get -y install \
     postgresql-9.4 postgresql-server-dev-9.4 postgresql-contrib-9.4
+RUN service postgresql start && \
+    su - postgres -c 'createuser -s jenkins; createdb -O jenkins jenkins'
 
 # Vagrant
 ADD https://dl.bintray.com/mitchellh/vagrant/vagrant_1.7.3_x86_64.deb /tmp/
