@@ -21,7 +21,7 @@ RUN apt-get -qqy update && apt-get -y install lxc-docker aufs-tools
 RUN chmod +x /usr/local/bin/wrapdocker
 
 # PostgreSQL
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main"
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 RUN wget -q -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 RUN apt-get -qqy update && apt-get -y install \
     postgresql-9.4 postgresql-server-dev-9.4 postgresql-contrib-9.4
