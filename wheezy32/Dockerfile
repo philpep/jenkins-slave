@@ -9,12 +9,11 @@ RUN apt-get -qqy update && apt-get -y install \
     libxml2-dev libxslt1-dev lsb-release pdftk pkg-config redis-server rsync \
     ttf-dejavu wget zlib1g-dev \
     python python-dev \
-    python-setuptools \
     python-pip
 
-
-RUN pip install 'tox>=1.8,<1.9'
-
+# Python
+RUN pip install -U 'pip>=7,<8'
+RUN pip install -U 'virtualenv>=13,<14' 'tox>=2,<3'
 
 # PostgreSQL
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ wheezy-pgdg main" > /etc/apt/sources.list.d/pgdg.list

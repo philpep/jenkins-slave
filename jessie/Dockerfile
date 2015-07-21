@@ -8,10 +8,12 @@ RUN apt-get -qqy update && apt-get -y install \
     libfreetype6-dev libjpeg-dev libpng-dev libsmbclient-dev libssl-dev \
     libxml2-dev libxslt1-dev lsb-release pdftk pkg-config redis-server rsync \
     ttf-dejavu wget zlib1g-dev \
-    python python-dev python3-dev python3-virtualenv python-tox \
-    python-setuptools python3-setuptools \
+    python python-dev python3-dev \
     python-pip python3-pip
 
+# Python
+RUN pip install -U 'pip>=7,<8'
+RUN pip install -U 'virtualenv>=13,<14' 'tox>=2,<3'
 
 # Docker
 ADD https://raw.githubusercontent.com/jpetazzo/dind/master/wrapdocker /usr/local/bin/wrapdocker
