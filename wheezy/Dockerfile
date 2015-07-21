@@ -28,6 +28,7 @@ RUN service postgresql start && \
 RUN useradd -m -s /bin/bash jenkins
 RUN echo jenkins:jenkins | chpasswd
 RUN echo "jenkins ALL=(root) NOPASSWD: ALL" > /etc/sudoers.d/jenkins
+RUN chmod 440 /etc/sudoers.d/jenkins
 RUN mkdir -p /var/run/sshd
 
 EXPOSE 22
