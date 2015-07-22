@@ -3,13 +3,20 @@ MAINTAINER Philippe Pepiot <phil@philpep.org>
 
 RUN apt-get -qqy update && apt-get -y install \
     apt-transport-https ca-certificates curl lxc iptables \
-    openjdk-7-jre-headless sudo ssh \
+    openjdk-7-jre-headless sudo ssh locales \
     build-essential fontconfig git libevent-dev \
     libfreetype6-dev libjpeg-dev libpng-dev libsmbclient-dev libssl-dev \
     libxml2-dev libxslt1-dev lsb-release pdftk pkg-config redis-server rsync \
     ttf-dejavu wget zlib1g-dev \
     python python-dev python3-dev \
     python-pip python3-pip
+
+# Locales
+RUN echo "LANG=en_US.UTF-8" > /etc/default/locale && \
+    echo "LANGUAGE=en_US:en" >> /etc/default/locale && \
+    echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
+    locale-gen && \
+    update-locale
 
 # Python
 RUN pip install -U 'pip>=7,<8'
