@@ -38,8 +38,8 @@ RUN service postgresql start && \
     su - postgres -c 'createuser -s jenkins; createdb -O jenkins jenkins'
 
 # Vagrant
-ADD https://dl.bintray.com/mitchellh/vagrant/vagrant_1.7.3_x86_64.deb /tmp/
-RUN dpkg -i /tmp/vagrant_1.7.3_x86_64.deb
+ADD https://dl.bintray.com/mitchellh/vagrant/vagrant_1.7.4_x86_64.deb /tmp/
+RUN dpkg -i /tmp/vagrant_1.7.4_x86_64.deb
 
 # Jenkins user
 RUN useradd -m -s /bin/bash jenkins
