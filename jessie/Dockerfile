@@ -49,6 +49,11 @@ RUN echo "jenkins ALL=(root) NOPASSWD: ALL" > /etc/sudoers.d/jenkins
 RUN chmod 440 /etc/sudoers.d/jenkins
 RUN mkdir -p /var/run/sshd
 
+# Tmpfs we divert because some old docker plugin version have usr/sbin/sshd hard-coded
+RUN dpkg-divert --add --rename --divert /usr/sbin/sshd.real /usr/sbin/sshd
+ADD wrapsshd /usr/sbin/sshd
+RUN chmod +x /usr/sbin/sshd
+
 EXPOSE 22
 VOLUME /var/lib/docker
 CMD ["/usr/sbin/sshd", "-D"]
