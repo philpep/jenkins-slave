@@ -42,14 +42,17 @@ ADD https://dl.bintray.com/mitchellh/vagrant/vagrant_1.7.4_x86_64.deb /tmp/
 RUN dpkg -i /tmp/vagrant_1.7.4_x86_64.deb
 
 # Jenkins user
-RUN useradd -m -s /bin/bash jenkins
+RUN useradd -m -s /bin/bash jenkins && \
+    mkdir -p /home/jenkins/workspace && \
+    chown jenkins:jenkins /home/jenkins/workspace && \
+    mkdir -p /var/lib/docker/jenkins
 RUN echo jenkins:jenkins | chpasswd
 RUN adduser jenkins docker
 RUN echo "jenkins ALL=(root) NOPASSWD: ALL" > /etc/sudoers.d/jenkins
 RUN chmod 440 /etc/sudoers.d/jenkins
-RUN mkdir -p /var/run/sshd
 
 # Tmpfs we divert because some old docker plugin version have usr/sbin/sshd hard-coded
+RUN mkdir -p /var/run/sshd
 RUN dpkg-divert --add --rename --divert /usr/sbin/sshd.real /usr/sbin/sshd
 ADD wrapsshd /usr/sbin/sshd
 RUN chmod +x /usr/sbin/sshd
