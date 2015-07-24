@@ -4,6 +4,7 @@ MAINTAINER Philippe Pepiot <phil@philpep.org>
 RUN apt-get -qqy update && apt-get -y install \
     apt-transport-https ca-certificates curl lxc iptables \
     openjdk-7-jre-headless sudo ssh locales \
+    whois pwgen \
     build-essential fontconfig git libevent-dev \
     libfreetype6-dev libjpeg-dev libpng-dev libsmbclient-dev libssl-dev \
     libxml2-dev libxslt1-dev lsb-release pdftk pkg-config redis-server rsync \
