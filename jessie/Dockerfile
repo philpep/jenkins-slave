@@ -46,7 +46,11 @@ RUN dpkg -i /tmp/vagrant_1.7.4_x86_64.deb
 RUN useradd -m -s /bin/bash jenkins && \
     mkdir -p /home/jenkins/workspace && \
     chown jenkins:jenkins /home/jenkins/workspace && \
-    mkdir -p /var/lib/docker/jenkins
+    mkdir -p /var/lib/docker/jenkins && \
+    mkdir -p /home/jenkins/.ssh && \
+    chown jenkins:jenkins /home/jenkins/.ssh && \
+    mkdir -p /home/jenkins/.pip && \
+    chown jenkins:jenkins /home/jenkins/.pip
 RUN echo jenkins:jenkins | chpasswd
 RUN adduser jenkins docker
 RUN echo "jenkins ALL=(root) NOPASSWD: ALL" > /etc/sudoers.d/jenkins
