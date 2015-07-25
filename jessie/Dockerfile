@@ -25,9 +25,9 @@ RUN pip install -U 'virtualenv>=13,<14' 'tox>=2,<3'
 
 # Docker
 ADD https://raw.githubusercontent.com/jpetazzo/dind/master/wrapdocker /usr/local/bin/wrapdocker
-RUN echo "deb https://get.docker.com/ubuntu docker main" > /etc/apt/sources.list.d/docker.list
-RUN apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
-RUN apt-get -qqy update && apt-get -y install lxc-docker aufs-tools
+RUN echo "deb https://apt.dockerproject.org/repo debian-jessie main" > /etc/apt/sources.list.d/docker.list
+RUN apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+RUN apt-get -qqy update && apt-get -y install docker-engine aufs-tools
 RUN chmod +x /usr/local/bin/wrapdocker
 
 # PostgreSQL
