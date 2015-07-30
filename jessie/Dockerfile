@@ -10,7 +10,9 @@ RUN apt-get -qqy update && apt-get -y install \
     libxml2-dev libxslt1-dev lsb-release pdftk pkg-config redis-server rsync \
     ttf-dejavu wget zlib1g-dev \
     python python-dev python3-dev \
-    python-pip python3-pip
+    python-pip python3-pip \
+    texlive-latex-recommended texlive-latex-extra \
+    texlive-fonts-recommended texlive-lang-french dvidvi
 
 # Locales
 RUN echo "LANG=en_US.UTF-8" > /etc/default/locale && \
