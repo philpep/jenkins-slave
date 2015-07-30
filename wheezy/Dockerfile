@@ -1,6 +1,8 @@
 FROM debian:wheezy
 MAINTAINER Philippe Pepiot <phil@philpep.org>
 
+RUN printf 'APT::Install-Recommends "0";\nAPT::Install-Suggests "0";\n' > /etc/apt/apt.conf.d/no-recommands
+
 RUN apt-get -qqy update && apt-get -y install \
     apt-transport-https ca-certificates curl \
     openjdk-7-jre-headless sudo ssh locales \
