@@ -36,7 +36,7 @@ Installation:
 This is a [debian](https://debian.org) jessie including:
 
   * [gcc](https://gcc.gnu.org/) 4.9
-  * [Python](https://python.org) 2.7.9
+  * [Python](https://python.org) 2.7.9 and 3.4.2
   * [PostgreSQL](http://www.postgresql.org) 9.4
   * [redis](http://redis.io) 2.8
   * [pip](https://pip.pypa.io/en/stable/) 7.1
