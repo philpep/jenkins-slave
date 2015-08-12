@@ -42,7 +42,7 @@ This is a [debian](https://debian.org) jessie including:
   * [pip](https://pip.pypa.io/en/stable/) 7.1
   * [virtualenv](https://virtualenv.pypa.io) 13.1
   * [tox](https://tox.readthedocs.org) 2.1
-  * [docker](https://www.docker.com/) 1.7
+  * [docker](https://www.docker.com/) 1.8
   * [vagrant](https://www.vagrantup.com) 1.7
 
 As you can see, this image can run docker in docker :)
