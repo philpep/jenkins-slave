@@ -2,6 +2,10 @@ FROM debian:wheezy
 MAINTAINER Philippe Pepiot <phil@philpep.org>
 
 RUN printf 'APT::Install-Recommends "0";\nAPT::Install-Suggests "0";\n' > /etc/apt/apt.conf.d/no-recommands
+RUN echo "deb-src http://httpredir.debian.org/debian wheezy main" >> /etc/apt/sources.list && \
+    echo "deb-src http://httpredir.debian.org/debian wheezy-updates main" >> /etc/apt/sources.list && \
+    echo "deb-src http://security.debian.org wheezy/updates main" >> /etc/apt/sources.list
+
 
 RUN apt-get -qqy update && apt-get -y install \
     apt-transport-https ca-certificates curl \
