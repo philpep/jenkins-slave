@@ -25,8 +25,8 @@ RUN echo "LANG=en_US.UTF-8" > /etc/default/locale && \
     update-locale
 
 # Python
-RUN pip install -U 'pip>=7,<8' && \
-    pip install -U 'virtualenv>=13,<14' 'tox>=2,<3' && \
+RUN pip install -U 'pip>=7,<8'
+RUN pip install -U 'virtualenv>=13,<14' 'tox>=2,<3' && \
     rm -rf /root/.cache/pip
 
 # PostgreSQL
