@@ -25,23 +25,24 @@ RUN echo "LANG=en_US.UTF-8" > /etc/default/locale && \
     update-locale
 
 # Python
-RUN pip install -U 'pip>=7,<8'
-RUN pip install -U 'virtualenv>=13,<14' 'tox>=2,<3'
+RUN pip install -U 'pip>=7,<8' && \
+    pip install -U 'virtualenv>=13,<14' 'tox>=2,<3' && \
+    rm -rf /root/.cache/pip
 
 # PostgreSQL
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ wheezy-pgdg main" > /etc/apt/sources.list.d/pgdg.list
-RUN wget -q -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
-RUN apt-get -qqy update && apt-get -y install \
-    postgresql-9.4 postgresql-server-dev-9.4 postgresql-contrib-9.4
-RUN service postgresql start && \
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ wheezy-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
+    wget -q -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
+    apt-get -qqy update && apt-get -y install \
+    postgresql-9.4 postgresql-server-dev-9.4 postgresql-contrib-9.4 && \
+    service postgresql start && \
     su - postgres -c 'createuser -s jenkins; createdb -O jenkins jenkins'
 
 # Jenkins user
-RUN useradd -m -s /bin/bash jenkins
-RUN echo jenkins:jenkins | chpasswd
-RUN echo "jenkins ALL=(root) NOPASSWD: ALL" > /etc/sudoers.d/jenkins
-RUN chmod 440 /etc/sudoers.d/jenkins
-RUN mkdir -p /var/run/sshd
+RUN useradd -m -s /bin/bash jenkins && \
+    echo jenkins:jenkins | chpasswd && \
+    echo "jenkins ALL=(root) NOPASSWD: ALL" > /etc/sudoers.d/jenkins && \
+    chmod 440 /etc/sudoers.d/jenkins && \
+    mkdir -p /var/run/sshd
 
 EXPOSE 22
 VOLUME /var/lib/docker

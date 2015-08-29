@@ -24,28 +24,29 @@ RUN echo "LANG=en_US.UTF-8" > /etc/default/locale && \
     update-locale
 
 # Python
-RUN pip install -U 'pip>=7,<8'
-RUN pip install -U 'virtualenv>=13,<14' 'tox>=2,<3'
+RUN pip install -U 'pip>=7,<8' && \
+    pip install -U 'virtualenv>=13,<14' 'tox>=2,<3' && \
+    rm -rf /root/.cache/pip
 
 # Docker
 ADD https://raw.githubusercontent.com/jpetazzo/dind/master/wrapdocker /usr/local/bin/wrapdocker
-RUN echo "deb https://apt.dockerproject.org/repo debian-jessie main" > /etc/apt/sources.list.d/docker.list
-RUN apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
-RUN apt-get -qqy update && apt-get -y install docker-engine aufs-tools
-RUN chmod +x /usr/local/bin/wrapdocker
+RUN echo "deb https://apt.dockerproject.org/repo debian-jessie main" > /etc/apt/sources.list.d/docker.list && \
+    apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D && \
+    apt-get -qqy update && apt-get -y install docker-engine aufs-tools && \
+    chmod +x /usr/local/bin/wrapdocker
 
 # PostgreSQL
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" > /etc/apt/sources.list.d/pgdg.list
-RUN wget -q -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
-RUN apt-get -qqy update && apt-get -y install \
-    postgresql-9.4 postgresql-server-dev-9.4 postgresql-contrib-9.4
-RUN service postgresql start && \
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
+    wget -q -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
+    apt-get -qqy update && apt-get -y install \
+    postgresql-9.4 postgresql-server-dev-9.4 postgresql-contrib-9.4 && \
+    service postgresql start && \
     su - postgres -c 'createuser -s jenkins; createdb -O jenkins jenkins'
 
 # Vagrant
-ADD https://dl.bintray.com/mitchellh/vagrant/vagrant_1.7.4_x86_64.deb /tmp/
-RUN dpkg -i /tmp/vagrant_1.7.4_x86_64.deb
-RUN rm /tmp/vagrant_1.7.4_x86_64.deb
+RUN wget -q https://dl.bintray.com/mitchellh/vagrant/vagrant_1.7.4_x86_64.deb && \
+    dpkg -i vagrant_1.7.4_x86_64.deb && \
+    rm vagrant_1.7.4_x86_64.deb
 
 # Jenkins user
 RUN useradd -m -s /bin/bash jenkins && \
@@ -55,16 +56,16 @@ RUN useradd -m -s /bin/bash jenkins && \
     mkdir -p /home/jenkins/.ssh && \
     chown jenkins:jenkins /home/jenkins/.ssh && \
     mkdir -p /home/jenkins/.pip && \
-    chown jenkins:jenkins /home/jenkins/.pip
-RUN echo jenkins:jenkins | chpasswd
-RUN adduser jenkins docker && \
-    adduser jenkins kvm
-RUN echo "jenkins ALL=(root) NOPASSWD: ALL" > /etc/sudoers.d/jenkins
-RUN chmod 440 /etc/sudoers.d/jenkins
+    chown jenkins:jenkins /home/jenkins/.pip && \
+    echo jenkins:jenkins | chpasswd && \
+    adduser jenkins docker && \
+    adduser jenkins kvm && \
+    echo "jenkins ALL=(root) NOPASSWD: ALL" > /etc/sudoers.d/jenkins && \
+    chmod 440 /etc/sudoers.d/jenkins
 
-# Tmpfs we divert because some old docker plugin version have usr/sbin/sshd hard-coded
-RUN mkdir -p /var/run/sshd
-RUN dpkg-divert --add --rename --divert /usr/sbin/sshd.real /usr/sbin/sshd
+# Tmpfs: we divert because some old docker plugin version have /usr/sbin/sshd hard-coded
+RUN mkdir -p /var/run/sshd && \
+    dpkg-divert --add --rename --divert /usr/sbin/sshd.real /usr/sbin/sshd
 ADD wrapsshd /usr/sbin/sshd
 RUN chmod +x /usr/sbin/sshd
 
