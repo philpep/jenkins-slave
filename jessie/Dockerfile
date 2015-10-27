@@ -14,7 +14,8 @@ RUN apt-get -qqy update && apt-get -y install \
     python python-dev python3-dev \
     python-pip python3-pip \
     texlive-latex-recommended texlive-latex-extra \
-    texlive-fonts-recommended texlive-lang-french dvidvi
+    texlive-fonts-recommended texlive-lang-french dvidvi \
+    rst2pdf inkscape python-imaging python-sphinx python-matplotlib
 
 # Locales
 RUN echo "LANG=en_US.UTF-8" > /etc/default/locale && \
