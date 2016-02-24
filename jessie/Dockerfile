@@ -45,9 +45,9 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" > /etc/
     su - postgres -c 'createuser -s jenkins; createdb -O jenkins jenkins'
 
 # Vagrant
-RUN LANG=en_US.UTF-8 wget -q -O /tmp/vagrant_1.7.4_x86_64.deb https://dl.bintray.com/mitchellh/vagrant/vagrant_1.7.4_x86_64.deb && \
-    dpkg -i /tmp/vagrant_1.7.4_x86_64.deb && \
-    rm -f /tmp/vagrant_1.7.4_x86_64.deb
+RUN LANG=en_US.UTF-8 wget -q -O /tmp/vagrant_1.8.1_x86_64.deb https://releases.hashicorp.com/vagrant/1.8.1/vagrant_1.8.1_x86_64.deb && \
+    dpkg -i /tmp/vagrant_1.8.1_x86_64.deb && \
+    rm -f /tmp/vagrant_1.8.1_x86_64.deb
 
 # Jenkins user
 RUN useradd -m -s /bin/bash jenkins && \
