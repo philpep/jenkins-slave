@@ -71,27 +71,3 @@ For optimal performance, if you have a slow disks but a lot of RAM, you can run 
     sudo mount -t tmpfs -o size=3G tmpfs /var/lib/docker
     sudo wrapdocker true
     [...]
-
-
-philpep/jenkins-slave:wheezy
-----------------------------
-
-Installation:
-
-    docker pull philpep/jenkins-slave:wheezy
-
-This is a [debian](https://debian.org) jessie including:
-
-  * [gcc](https://gcc.gnu.org/) 4.7
-  * [Python](https://python.org) 2.7.3
-  * [PostgreSQL](http://www.postgresql.org) 9.4
-  * [redis](http://redis.io) 2.4
-  * [pip](https://pip.pypa.io/en/stable/) 7.1
-  * [virtualenv](https://virtualenv.pypa.io) 13.1
-  * [tox](https://tox.readthedocs.org) 2.1
-
-
-philpep/jenkins-slave:wheezy32
-------------------------------
-
-Same as `philpep/jenkins-slave:wheezy` but in i386 architecture.
