@@ -5,17 +5,9 @@ RUN printf 'APT::Install-Recommends "0";\nAPT::Install-Suggests "0";\n' > /etc/a
 
 RUN apt-get -qqy update && apt-get -y install \
     apt-transport-https ca-certificates curl lxc iptables \
-    openjdk-7-jre-headless sudo ssh locales \
-    whois pwgen qemu-kvm gnuplot rst2pdf pdftk \
-    build-essential fontconfig git libevent-dev \
-    libfreetype6-dev libjpeg-dev libpng-dev libsmbclient-dev libssl-dev \
-    libxml2-dev libxslt1-dev lsb-release pdftk pkg-config redis-server rsync \
-    ttf-dejavu wget zlib1g-dev \
-    python python-dev python3-dev \
-    python-pip python3-pip \
-    texlive-latex-recommended texlive-latex-extra \
-    texlive-fonts-recommended texlive-lang-french dvidvi \
-    rst2pdf inkscape python-imaging python-sphinx python-matplotlib
+    openjdk-7-jre-headless sudo ssh locales build-essential git \
+    redis-server rsync wget python python-dev python3-dev \
+    python-pip python3-pip
 
 # Locales
 RUN echo "LANG=en_US.UTF-8" > /etc/default/locale && \
@@ -25,14 +17,16 @@ RUN echo "LANG=en_US.UTF-8" > /etc/default/locale && \
     update-locale
 
 # Python
-RUN pip install -U 'pip>=7,<8' && \
-    pip install -U 'virtualenv>=13,<14' 'tox>=2,<3' && \
+RUN python -m pip install -U pip && \
+    python3 -m pip install -U pip && \
+    python -m pip install -U virtualenv tox && \
+    python3 -m pip install -U virtualenv && \
     rm -rf /root/.cache/pip
 
 # Docker
 ADD https://raw.githubusercontent.com/jpetazzo/dind/master/wrapdocker /usr/local/bin/wrapdocker
 RUN echo "deb https://apt.dockerproject.org/repo debian-jessie main" > /etc/apt/sources.list.d/docker.list && \
-    apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D && \
+    wget https://apt.dockerproject.org/gpg -O - | apt-key add - && \
     apt-get -qqy update && apt-get -y install docker-engine aufs-tools && \
     chmod +x /usr/local/bin/wrapdocker
 
@@ -43,11 +37,6 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" > /etc/
     postgresql-9.4 postgresql-server-dev-9.4 postgresql-contrib-9.4 && \
     service postgresql start && \
     su - postgres -c 'createuser -s jenkins; createdb -O jenkins jenkins'
-
-# Vagrant
-RUN LANG=en_US.UTF-8 wget -q -O /tmp/vagrant_1.8.1_x86_64.deb https://releases.hashicorp.com/vagrant/1.8.1/vagrant_1.8.1_x86_64.deb && \
-    dpkg -i /tmp/vagrant_1.8.1_x86_64.deb && \
-    rm -f /tmp/vagrant_1.8.1_x86_64.deb
 
 # Jenkins user
 RUN useradd -m -s /bin/bash jenkins && \
@@ -60,7 +49,6 @@ RUN useradd -m -s /bin/bash jenkins && \
     chown jenkins:jenkins /home/jenkins/.pip && \
     echo jenkins:jenkins | chpasswd && \
     adduser jenkins docker && \
-    adduser jenkins kvm && \
     echo "jenkins ALL=(root) NOPASSWD: ALL" > /etc/sudoers.d/jenkins && \
     chmod 440 /etc/sudoers.d/jenkins
 

@@ -36,21 +36,19 @@ Installation:
 This is a [debian](https://debian.org) jessie including:
 
   * [gcc](https://gcc.gnu.org/) 4.9
-  * [Python](https://python.org) 2.7.9 and 3.4.2
+  * [Python](https://python.org) 2.7 and 3.4
   * [PostgreSQL](http://www.postgresql.org) 9.4
   * [redis](http://redis.io) 2.8
-  * [pip](https://pip.pypa.io/en/stable/) 7.1
-  * [virtualenv](https://virtualenv.pypa.io) 13.1
-  * [tox](https://tox.readthedocs.org) 2.1
-  * [docker](https://www.docker.com/) 1.8
-  * [vagrant](https://www.vagrantup.com) 1.8
+  * [pip](https://pip.pypa.io/en/stable/) latest
+  * [virtualenv](https://virtualenv.pypa.io) latest
+  * [tox](https://tox.readthedocs.org) latest
+  * [docker](https://www.docker.com/) latest
 
 As you can see, this image can run docker in docker :)
 
 ![dind](http://dl.philpep.org/docker-meme.jpg)
 
-This is convenient if your test/build process include docker or vagrant (or
-both).
+This is convenient if your test/build process include docker.
 
 You will have to run container privileged (an option configure in jenkins
 Docker Template) and start docker within the build script.
