@@ -7,7 +7,7 @@ RUN apt-get -qqy update && apt-get -y install \
     apt-transport-https ca-certificates curl lxc iptables \
     openjdk-7-jre-headless sudo ssh locales build-essential git \
     redis-server rsync wget python python-dev python3-dev \
-    python-pip python3-pip
+    python-pip python3-pip mercurial
 
 # Locales
 RUN echo "LANG=en_US.UTF-8" > /etc/default/locale && \
