@@ -7,7 +7,8 @@ RUN apt-get -qqy update && apt-get -y install \
     apt-transport-https ca-certificates curl lxc iptables \
     openjdk-7-jre-headless sudo ssh locales build-essential git \
     redis-server rsync wget python python-dev python3-dev \
-    python-pip python3-pip mercurial
+    python-pip python3-pip mercurial \
+    php5-cli php5-curl php5-json
 
 # Locales
 RUN echo "LANG=en_US.UTF-8" > /etc/default/locale && \
@@ -37,6 +38,12 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" > /etc/
     postgresql-9.4 postgresql-server-dev-9.4 postgresql-contrib-9.4 && \
     service postgresql start && \
     su - postgres -c 'createuser -s jenkins; createdb -O jenkins jenkins'
+
+# Phabricator cli tools
+RUN mkdir -p /usr/local/share/phabricator && \
+    git clone -b master https://github.com/phacility/libphutil.git /usr/local/share/phabricator/libphutil && \
+    git clone -b master https://github.com/phacility/arcanist.git /usr/local/share/phabricator/arcanist && \
+    ln -fsn /usr/local/share/phabricator/arcanist/bin/arc /usr/local/bin/arc
 
 # Jenkins user
 RUN useradd -m -s /bin/bash jenkins && \

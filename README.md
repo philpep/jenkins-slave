@@ -43,6 +43,7 @@ This is a [debian](https://debian.org) jessie including:
   * [virtualenv](https://virtualenv.pypa.io) latest
   * [tox](https://tox.readthedocs.org) latest
   * [docker](https://www.docker.com/) latest
+  * [arcanist](https://secure.phabricator.com/book/phabricator/article/arcanist/) latest
 
 As you can see, this image can run docker in docker :)
 
